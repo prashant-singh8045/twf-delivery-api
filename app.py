@@ -63,4 +63,4 @@ def calculate_cost():
 
 if __name__ == '__main__':
     port = os.environ.get("PORT", 5000)  # Use dynamic port or default to 5000
-    app.run(host="0.0.0.0", port=int(port))
+    app.run(host="0.0.0.0", port=int(port), debug=False)  # Debug turned off
