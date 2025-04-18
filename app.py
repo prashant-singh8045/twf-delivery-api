@@ -1,5 +1,5 @@
-import os
 from flask import Flask, request, jsonify
+import os
 
 app = Flask(__name__)
 
@@ -62,5 +62,5 @@ def calculate_cost():
     })
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))  # Use PORT environment variable or fallback to 5000
-    app.run(host='0.0.0.0', port=port)  # Make sure the app listens on all interfaces and uses the correct port
+    port = os.environ.get("PORT", 5000)  # Use dynamic port or default to 5000
+    app.run(host="0.0.0.0", port=int(port))
