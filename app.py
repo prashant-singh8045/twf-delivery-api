@@ -26,32 +26,26 @@ travel_costs = {
 }
 
 def calculate_min_cost(order):
-    # Identify centers that have the products
     centers_needed = set()
     for product, quantity in order.items():
         if quantity > 0:
             centers_needed.add(product_locations.get(product))
 
     if not centers_needed:
-        return 0  # No items to deliver
+        return 0
 
-    # Greedily pick the closest center to L1 as the starting point
     start_center = min(centers_needed, key=lambda center: travel_costs.get((center, "L1"), float('inf')))
     centers_needed.remove(start_center)
 
     total_cost = travel_costs.get((start_center, "L1"), 0)
-
-    # Now, we need to figure out the most efficient way to visit all other centers
-    # We’ll take the nearest center first and then continue picking the nearest available center.
     current_center = start_center
 
     while centers_needed:
         next_center = min(centers_needed, key=lambda center: travel_costs.get((current_center, center), float('inf')))
-        total_cost += travel_costs.get((current_center, next_center), 0)  # Travel between centers
+        total_cost += travel_costs.get((current_center, next_center), 0)
         current_center = next_center
         centers_needed.remove(next_center)
 
-    # Finally, we must return to L1 after picking up all items
     total_cost += travel_costs.get((current_center, "L1"), 0)
 
     return total_cost
@@ -67,4 +61,4 @@ def calculate_cost():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)
